@@ -71,19 +71,21 @@ class NeonGlowText:
 
         # Let's find an appropriate font size...
         f_size = self.MAX_FONT_SIZE
-        
+
         while True:
             cr.set_font_size(f_size)
             _, _, t_width, t_height, _, _ = cr.text_extents(self.text)
-            
+
             # Check if text is within the desired boundaries
-            if not (t_width > self.width - min(self.MAX_PADDING, f_size) or
-                t_height > self.height - min(self.MAX_PADDING, f_size)) \
-                or f_size <= self.MIN_FONT_SIZE:
-                    break
-                    
+            if (
+                t_width <= self.width - min(self.MAX_PADDING, f_size)
+                and t_height <= self.height - min(self.MAX_PADDING, f_size)
+                or f_size <= self.MIN_FONT_SIZE
+            ):
+                break
+
             f_size -= 2
-        
+
         self.font_size = f_size
 
     def _move_to_center(self, cr):
